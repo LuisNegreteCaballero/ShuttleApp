@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+<display-name>JavaServerFaces</display-name>
+
+<context-param>
+
+<param-name>javax.faces.CLIENT_WINDOW_MODE</param-name>
+
+<param-value>url</param-value>
+
+</context-param>
+
+<context-param>
+
+<param-name>javax.faces.PROJECT_STAGE</param-name>
+
+<param-value>Development</param-value>
+
+</context-param>
+  <servlet>
+        <servlet-name>Push Servlet</servlet-name>
+        <servlet-class>org.primefaces.push.PushServlet</servlet-class>
+        <init-param>
+   <param-name>org.atmosphere.cpr.asyncSupport</param-name>
+   <param-value>org.atmosphere.container.GlassFishServ30WebSocketSupport</param-value>
+</init-param>
+        <init-param>
+   <param-name>org.atmosphere.cpr.asyncSupport</param-name>
+   <param-value>org.atmosphere.container.JSR356AsyncSupport</param-value>
+</init-param>
+        <init-param>
+            <param-name>org.atmosphere.cpr.broadcaster.shareableThreadPool</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>org.atmosphere.cpr.broadcaster.maxProcessingThreads</param-name>
+            <param-value>10</param-value>
+        </init-param>
+        <init-param>
+            <param-name>org.atmosphere.cpr.broadcaster.maxAsyncWriteThreads</param-name>
+            <param-value>10</param-value>
+        </init-param>
+        <init-param>
+            <param-name>org.atmosphere.cpr.broadcasterLifeCyclePolicy</param-name>
+            <param-value>IDLE</param-value>
+        </init-param>
+        <init-param>
+            <param-name>org.atmosphere.cpr.recoverFromDestroyedBroadcaster</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Push Servlet</servlet-name>
+        <url-pattern>/primepush/*</url-pattern>
+    </servlet-mapping>
+
+	<servlet>
+		<servlet-name>Jersey Web Application</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+             
+		<load-on-startup>1</load-on-startup>
+                
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Jersey Web Application</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>
